@@ -1,7 +1,5 @@
-from datasets import load_dataset_builder
-from datasets import load_dataset
-from datasets import get_dataset_split_names
-from datasets import get_dataset_config_names
+from datasets import load_dataset_builder, load_dataset, get_dataset_split_names, get_dataset_config_names, \
+    DownloadManager, Dataset
 """
 # 加载数据集合
 ds_builder = load_dataset_builder("rotten_tomatoes")  # 翻译数据集合
@@ -22,6 +20,22 @@ print(configs)
 mindsFR = load_dataset("PolyAI/minds14", "fr-FR", split="train")
 """
 
-def
 
+def load_helper(url: str = None, dataset_name: str = None, download: bool = True, download_dir: str = None, **kwargs) -> Dataset:
+    """
+    加载数据集合，从url或者dataset，是否下载
+    :param download_dir: 下载位置
+    :param url: 从http下载
+    :param dataset_name: 从hub下载
+    :param download: 是否下载
+    :return:
+    """
+    dataset = None
+    if dataset_name is not None and download is True:
+        dataset = load_dataset(path=dataset_name, data_dir=download_dir, **kwargs)
 
+    assert dataset is not None
+    return dataset
+
+if __name__ == "__main__":
+    d = load_helper(dataset_name="rotten_tomatoes", download=True, download_dir="download_datasets")
